@@ -1,12 +1,12 @@
 Package: banneR
 Type: Package
-Title: What the package does (short line)
+Title: Print a UNIX-like text banner
 Version: 1.0
 Date: 2018-10-01
 Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Maintainer: José R. Valverde <jrvalverde@cnb.csic.es>
+Description: The banner package provides functionality to print large-size text in R
+License: EU-GPL v2
 RoxygenNote: 6.1.0
 Suggests: testthat
 Encoding: UTF-8
