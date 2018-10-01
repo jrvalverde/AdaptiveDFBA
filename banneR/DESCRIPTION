@@ -3,7 +3,7 @@ Type: Package
 Title: Print a UNIX-like text banner
 Version: 1.0
 Date: 2018-10-01
-Author: Who wrote it
+Author: José R. Valverde
 Maintainer: José R. Valverde <jrvalverde@cnb.csic.es>
 Description: The banner package provides functionality to print large-size text in R
 License: EU-GPL v2
