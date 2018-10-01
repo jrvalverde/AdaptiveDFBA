@@ -7,6 +7,7 @@ For now, suffice it to say that, here, you will find an expanded DFBA method,
 that allows for greater versatility in controlling/steering dynamic FBA 
 metabolic simulations.
 
-You will also find here data and an example driver script that can be used as
+You will also find here the banneR package (to print UNIX(TM)-like banners in
+R scripts, example data and an example driver script that can be used as
 a command line program to simplify adpative dynamic FBA calculations in most
 cases.
