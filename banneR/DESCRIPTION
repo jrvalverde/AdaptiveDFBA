@@ -1,6 +1,6 @@
 Package: banneR
 Type: Package
-Title: Print a UNIX-like text banner
+Title: Print a UNIX(TM)-like text banner
 Version: 1.0
 Date: 2018-10-01
 Author: José R. Valverde
