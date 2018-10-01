@@ -6,7 +6,7 @@ Date: 2018-10-01
 Author: José R. Valverde
 Maintainer: José R. Valverde <jrvalverde@cnb.csic.es>
 Description: The banner package provides functionality to print large-size text in R
-License: EU-GPL v2
+License: EU-GPL v1.2
 RoxygenNote: 6.1.0
 Suggests: testthat
 Encoding: UTF-8
