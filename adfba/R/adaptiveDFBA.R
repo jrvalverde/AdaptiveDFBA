@@ -116,19 +116,19 @@
 #'     intentionally left undocumented until we have mode experience in using
 #'     it.
 #' 
-#' \emph{mediumConcs}: We consider two possibilities for modifying concentrations
+#' \emph{nutrientChanges}: We consider two possibilities for modifying concentrations
 #'     (experimentwise): one is that you add nutrients at predefined time points,
 #'     which is implemented as a table, and the other is that you have a sensor to
 #'     detect when nutrients are below a given value and then add the nutrients,
 #'     which is implemented as a function:
 #' 
-#' mediumConcs may be a table providing the delta changes in nutrient
+#' nutrientChanges may be a table providing the delta changes in nutrient
 #'     concentration at each time point. The changes at every time point should be
 #'     provided sorted in time order. Only final time points may be missing, not
 #'     intermediate time points. Deltas may positive (add nutrient), negative
 #'     (remove nutrient) or zero (leave unchanged).
 #' 
-#' mediumConcs may be a function, designed to address the second case by
+#' nutrientChanges may be a function, designed to address the second case by
 #'     simulating a fed-batch environent:  this function must take as only input
 #'     argument \emph{all} the current  concentrations (i.e. the function will act
 #'     as a "sensor" that is able to read concentrations at each time step) and
@@ -163,30 +163,31 @@
 #===================
 #
 #' @param retOptSol		Boolean. Indicates if optsol class will be returned or a simple list.
-#'				Default: \code{FALSE}
+#'			Default: \code{FALSE}
 #
 #' @param fld                   Boolean. Indicates if all fluxes at all steps will be returned.
-#'				Default: \code{FALSE}
+#'			Default: \code{FALSE}
 #
 #' @param exclUptakeRxns        List of uptake reactions whose substrate
-#'                       concentrations do not change 
-#'				Default: \code{c('EX_co2(e)','EX_o2(e)','EX_h2o(e)','EX_h(e)')}
+#'                      concentrations do not change 
+#'			Default: \code{c('EX_co2(e)','EX_o2(e)','EX_h2o(e)','EX_h(e)')}
 # 
 #' @param biomassRxn		Name of the biomass reaction so we can use it
 #'			to compute growth, concentrations, etc...
 #
 #' @param dynamicConstraints    Values of dynamically changing reaction rates
-#'				Default: \code{NULL}
+#'			Default: \code{NULL}
 #
-#' @param mediumConcs			A facility to simulate changing concentrations
+#' @param nutrientChanges	A facility to simulate changing concentrations
 #'			of nutrients: it may be either an array of delta values
 #'			to add at each time point, or a function that will
 #'			take the current concentrations and return the new ones (the old concentrations
 #'      		will be substituted by the new ones, so ensure you return all).
 #'			Default: \code{NULL}
 #
-#' @param useMTF			Whether to use MTF instead of FBA to compute
-#'			the fluxes
+#' @param method	Which method should be used to solve the system at each
+#'			step. Currently it can be 'FBA' or 'MTF'. Default:
+#'			\code{"FBA"}
 #
 #' @param verboseMode 	An integer value indicating the amount of output to stdout:\cr
 #'				0 (quiet)\cr
@@ -196,7 +197,7 @@
 #'      			  graphical progress bar.)\cr
 #'				4 (additional information on the computations being made plus a
 #'      			  graphical progress bar.)\cr
-#'				Default: \code{0}
+#'				  Default: \code{0}
 #
 #' @param \dots		Further arguments passed to \code{\linkS4class{sysBiolAlg}}.  Argument
 #'      		\code{solverParm} is a good candidate.
@@ -227,14 +228,15 @@
 #' @keywords optimize 
 # keywords Adaptive DFBA, DFBA, FBA, MTF, Metabolism, Metabolic analysis
 #
-#' @usage   adaptiveDFBA(model, substrateRxns, initConcentrations, initBiomass, timeStep, nSteps, 
-#'	    exclUptakeRxns,
-#'	    retOptSol = TRUE,
-#'            fld = FALSE, verboseMode = 2, 
-#'            verboseMode = 2,
-#'            biomassRxn = "",
-#'            dynamicConstraints,
-#'            mediumConcs, ...)
+#' @usage   adaptiveDFBA(model, substrateRxns, initConcentrations, initBiomass, 
+#'          timeStep, nSteps, 
+#'          exclUptakeRxns,
+#'          retOptSol = TRUE,
+#'          fld = FALSE, verboseMode = 2, 
+#'          verboseMode = 2,
+#'          biomassRxn = "",
+#'          dynamicConstraints,
+#'          nutrientChanges, ...)
 #
 #' @references     Valverde, J. R. et al. (2018) Manuscript in preparation.
 #'
@@ -275,9 +277,26 @@
 #'	## plot biomass and reactions
 #'	plot(Ec_df,plotRxns=c('EX_glc(e)','EX_ac(e)'));
 #'
+#'      # Run \code{adaptiveDFBA} using the specified dynamic constraints 
+#'	data(SlividansWT)
+#'	verbose <- 2
+#'      af_sol <- adaptiveDFBA(model, substrateRxns=substrateRxns, 
+#'   		    initConcentrations=initConcentrations,
+#'   		    initBiomass = initBiomass,
+#'   		    timeStep = timeStep,
+#'   		    nSteps = nSteps,
+#'   		    exclUptakeRxns=exclUptakeRxns,
+#'   		    retOptSol=TRUE,
+#'   		    fld=TRUE,
+#'   		    biomassRxn=biomassRxn,
+#'   		    dynamicConstraints=dynamicConstraints,
+#'   		    verboseMode=verbose);
+#'       plot(af_sol, plotRxns=plotRxns);
+#'
 #'	\dontrun{
 #'	## open S.lividans
 #'	data(Slividans)
+#'	# the distributed model has all exchange reactions without any limits
 #'	model <- Slividans;
 #'	biomass <- 'Biomass_SLI'	
 #'	nSteps=50
@@ -311,11 +330,13 @@
 #'	}
 #'	  
 #'	## Perform the simulation
+#'	#   Note that we provide an insufficient medium for growth
 #'	adfba <- adaptiveDFBA(model, 
-#'	          substrateRxns={'EX_mnl(e)'},	# we should use NMMP at least
+#'	          substrateRxns={'EX_mnl(e)'},	# we should better use NMMP
 #'	          initConcentrations=54,
 #'	          initBiomass=.01,
-#'	          timeStep=tStep,nSteps=nSteps,
+#'	          timeStep=tStep,
+#'                nSteps=nSteps,
 #'	          verboseMode=5,
 #'	          biomassRxn=biomass,
 #'	          dynamicConstraints=dc,
@@ -334,7 +355,10 @@
 # The function dynamicFBA() is inspired by the function
 # dynamicFBA() contained in the COBRA Toolbox.
 # The algorithm is the same.
-
+#
+#	" Oui, je vois l'heure; il est l'Éternité! "
+#			L'Horloge. Charles Baudelaire.
+#
 adaptiveDFBA <- function (model,
 			substrateRxns,
                         initConcentrations,
@@ -347,8 +371,8 @@ adaptiveDFBA <- function (model,
                         verboseMode = 2, 
 			biomassRxn = "",
                         dynamicConstraints = NULL,
-                        mediumConcs = NULL,
-                        useMTF = FALSE,
+                        nutrientChanges = NULL,
+                        method = "FBA",
                         ...){
 
     # aids for debugging/verbose messages
@@ -493,7 +517,7 @@ adaptiveDFBA <- function (model,
     # we'll use one concentration fir each possible reaction
     # and we'll start from a concentration of zero by default
     concentrations=rep(0,length(react_id(model)))
-    # XXX JR XXX
+    # XXX j XXX
     # THERE WAS AN INCONSISTENCY HERE: WHEN SUBSTRATE RXNS ARE NOT IN THE SAME
     # ORDER AS THEY ARE IN THE MODEL, THIS ASSIGNMENT WILL ASSIGN THE
     # CONCENTRATIONS ERRONEOUSLY SINCE THE ORDER IN initConcentrations IS 
@@ -516,7 +540,7 @@ adaptiveDFBA <- function (model,
     #   concentration or, if not, 1000 will be used instead,
     #	and that an initial concentration can be provided to a secretion 
     #	reaction (and will not be touched here)
-    #(concentrations == 0 & originalBound > 0);
+    #(concentrations == 0 & originalUptake > 0);
     #
     #	a second problem is that bidirectional reactions will be given
     # 	a concentration as well.
@@ -569,8 +593,9 @@ adaptiveDFBA <- function (model,
     ##--------------------------------------------------------------------------##
     # Initialize bounds
     #
-    # save original lower bounds for all reactions
-    originalBound <- -lowbnd(model)
+    # save original lower bounds for all reactions (we make uptake positive
+    # and secretion negative)
+    originalUptake <- -lowbnd(model)
     
     # these are to restore the model to its original bounds before returning
     originalLow <- lowbnd(model)
@@ -596,13 +621,13 @@ adaptiveDFBA <- function (model,
 
 
 if (TRUE) {
-	# *** XXX JR XXX ***
+	# *** XXX j XXX ***
 	# THIS CODE SHOULD BE REDUNDANT BUT ITS REMOVAL LEADS TO DIFFERENT
-        # RESULTS
+        # RESULTS. NEEDS FURTHER WORK.
     # Make sure bounds are not higher than those that were specified in the model
-    aboveOriginal = (uptakeBound > originalBound) & (originalBound > 0);
+    aboveOriginal = (uptakeBound > originalUptake) & (originalUptake > 0);
     # then we will use the smaller original bound
-    uptakeBound[aboveOriginal] = originalBound[aboveOriginal];
+    uptakeBound[aboveOriginal] = originalUptake[aboveOriginal];
     lowbnd(model)[excReactInd]  = -uptakeBound[excReactInd];    
 } # unremovable redundant code (???)
 
@@ -653,7 +678,7 @@ if (TRUE) {
         
         # First, modify the model to reflect time-specific constraints
         if ((! missing(dynamicConstraints)) && (! is.null(dynamicConstraints))) {
-	    if (verboseMode > 0) {
+	    if (verboseMode > 3) {
                 cat(info, 'Applying dynamic constraints\n')
             }
           if (is.function(dynamicConstraints)) {
@@ -716,14 +741,16 @@ if (TRUE) {
                     if (grepl("\\[low\\]", dcr)) {
                         # reaction.low.
                         lowbnd(model)[react_id(model) == rxnName] <- rxnValue
-                        originalBound[react_id(model) == rxnName] <- rxnValue
+                        # a negative lower bound implies uptake, so we change the sign
+                        originalUptake[react_id(model) == rxnName] <- -rxnValue
 		    } else if (grepl("\\[upp\\]", dcr)) {
                         # reaction.upp.
                         uppbnd(model)[react_id(model) == rxnName] <- rxnValue
                     } else {
                         # reaction
                         lowbnd(model)[react_id(model) == rxnName] <- rxnValue
-                        originalBound[react_id(model) == rxnName] <- rxnValue
+                        # a negative lower bound implies uptake, so we change the sign
+                        originalUptake[react_id(model) == rxnName] <- -rxnValue
                     	uppbnd(model)[react_id(model) == rxnName] <- rxnValue
 		    }
 	        }
@@ -757,22 +784,22 @@ if (TRUE) {
 	# Second, modify concentrations with the incremental
         # changes of media applied at this step, using either
         # an static table of deltas, or a sensor-feeder function
-        if ( ! missing(mediumConcs) && ! is.null(mediumConcs) )  {
+        if ( ! missing(nutrientChanges) && ! is.null(nutrientChanges) )  {
 	    if (verboseMode > 0) {
                 cat(info, 'Dynamically modifying concentrations\n')
             }
-            if (is.function(mediumConcs)) {
-                concentrations <- mediumConcs(concentrations)
+            if (is.function(nutrientChanges)) {
+                concentrations <- nutrientChanges(concentrations)
             } else {
-                # mediumConcs MUST be a table of concentration deltas at
+                # nutrientChanges MUST be a table of concentration deltas at
                 # each and every time point. At least we will use it
                 # as such. If it is not, either we will get an error or
                 # nothing will be modified (unless terribly unlucky).
-        	nutrientsAdded <- names(mediumConcs)[ -which(names(mediumConcs) %in% "Time")]
+        	nutrientsAdded <- names(nutrientChanges)[ -which(names(nutrientChanges) %in% "Time")]
         
                 for (nutrient in 1:length(nutrientsAdded)) {
 		    # modify its concentration as requested
-                    if (stepNo <= dim(mediumConcs[nutrient])[1]) {
+                    if (stepNo <= dim(nutrientChanges[nutrient])[1]) {
                         # NOTE that we do not check if the value is positive
                         # or not, i.e. we may both add and remove nutrients
                         # at any step (depending on the sign of the delta)
@@ -791,10 +818,19 @@ if (TRUE) {
         uptakeBound =  concentrations/(biomass*timeStep);
 
         # Figure out if the computed bounds were above the original bounds
-        aboveOriginal = (uptakeBound > originalBound) & (originalBound > 0);
+        #aboveOriginal = (uptakeBound > originalUptake) & (originalUptake > 0);
+        ### j ### in the former formula, an uptake is considered above the
+        ### original only if the original uptake was > 0
+        ### That is, for secretion reactions, it was ignored, which means that
+        ### if the concentration is > 0, the potential uptake is > 0 and since
+        ### that it is not fixed, it will be left as an uptake and not as a
+        ### secretion,
+        ### In other words, whenever an uptake is possible, it will be so, not
+        ### permitting secretion as long as there is metabolite outside,
+        aboveOriginal = (uptakeBound > originalUptake);
 
         # Revert to original bounds if the rate was too high
-        uptakeBound[aboveOriginal] = originalBound[aboveOriginal];
+        uptakeBound[aboveOriginal] = originalUptake[aboveOriginal];
 
         # This induces numerical instabilities in some cases
      ###uptakeBound[uptakeBound > 1000] = 1000;
@@ -817,7 +853,7 @@ if (TRUE) {
             for (i in 1:length(excReactInd)) {
                 if (excReactInd[i]) {
                     cat(paste(react_id(model)[i], 
-                        originalBound[i], 
+                        originalUptake[i], 
                         -uptakeBound[i], 
                         lowbnd(model)[i],
                         lplow[i],
@@ -832,40 +868,30 @@ if (TRUE) {
             }
         }
 
-	if (TRUE) {
-            # Update problem to solve the updated model
-            # without this it doesn't honor the new Biomass limits
-            lpmod <- sybil::sysBiolAlg(model, algorithm = "fba", ...)
-	    sol = sybil::optimizeProb(lpmod);
-	    if (verboseMode > 2) {
-                cat('\n')
-                cat(info, 'FBA step =', stepNo, 'ok =', sol$ok, 'stat =', sol$stat, '\n')
-	    }
-            ## checkSolStat
-            if ( length(checkSolStat(sol$stat,solver(problem(lpmod))))!=0 ){
-                cat(warn, 'FBA: No feasible solution - nutrients exhausted\n');
-                if (verboseMode > 3) {
-            	    # get indexes of problems for which there was no solution
-                    notSolved <- checkSolStat(sol$stat,solver(problem(lpmod)))
-                    for (i in notSolved) print(i)
-                    cat('\n')
-                }
-                break;
-            }
-        } 
-        if (FALSE) {
+	if (method == "directFBA") {
+            method <- "FBA"	#remove this and next line once this
+if (FALSE) {			#section is deemed OK
             ## use direct FBA on the model instead of an lp opt object
+            ### j ###
             #	THIS IS A WORKS IN PROGRESS AREA, HENCE IT IS DISABLED
 	    #
 	    # optimizeProb for class sysBiolAlg uses a different logic
             # from optimizeProb for class modelorg and both give different
             # flux distributions at some time points, hence concentrations 
-            # and system evolve (slightly) differently
-            # Oddly the two give coincident flux distributions in many
+            # and system evolve (slightly) differently.
+            #
+            # Oddly, the two give coincident flux distributions in most
             # steps; even after diverging for a few steps, they revert to
             # identical fluxes (implying that the concentration changes tend to
-            # compensate and the system oscillates around the same
-            # equilibrium)
+            # compensate and the system oscillates around (or tends to) some
+            # equilibrium). So the overall curve doesn't change appreciably,
+            # but I will not feel comfortable until I have thoroughly
+            # traced the internal logics and can see the source of these
+            # differences. Hence, it is disabled for now.
+            #
+            # Once it has been investigated, we will run speed tests and
+            # choose the best/fastest one or offer a choice.
+            #
 	    fba.sol <- optimizeProb(model, algorithm="fba", retOptSol=FALSE)
             if (verboseMode > 2) {
                 if (sol$obj != fba.sol$obj) {
@@ -896,9 +922,30 @@ if (TRUE) {
                 cat(warn, 'FBA: No feasible solution - nutrients exhausted\n');
                 break;
 	    }
+}
         }
-
-        if (useMTF) {
+	if (method == "FBA") {	# should be 'else if' once the above code is OK
+            # Update problem to solve the updated model
+            # without this it doesn't honor the new Biomass limits
+            lpmod <- sybil::sysBiolAlg(model, algorithm = "fba", ...)
+	    sol = sybil::optimizeProb(lpmod);
+	    if (verboseMode > 2) {
+                cat('\n')
+                cat(info, 'FBA step =', stepNo, 'ok =', sol$ok, 'stat =', sol$stat, '\n')
+	    }
+            ## checkSolStat
+            if ( length(checkSolStat(sol$stat,solver(problem(lpmod))))!=0 ){
+                cat(warn, 'FBA: No feasible solution - nutrients exhausted\n');
+                if (verboseMode > 3) {
+            	    # get indexes of problems for which there was no solution
+                    notSolved <- checkSolStat(sol$stat,solver(problem(lpmod)))
+                    for (i in notSolved) print(i)
+                    cat('\n')
+                }
+                break;
+            }
+        } 
+        else if (method == "MTF") {
 	    # use MTF instead of FBA
             # 	Here we use a previously computed FBA obj
 	    mtf.sol <- optimizeProb(model, algorithm="mtf", wtobj=sol$obj)
@@ -936,10 +983,52 @@ if (TRUE) {
                 cat(info, 'MTF step =', stepNo, 'ok =', sol$ok, 'stat =', sol$stat, '\n')
 	    }
         }
+        else {
+            cat(err, 'Unknown method, should be one of "FBA" or "MTF"\n')
+        }
+        
+	### j ###
+        # UNDOCUMENTED FEATURE
+        #	WORKS IN PROGRESS!!!	WORKS IN PROGRESS!!!
+        #	Compute FVA at each time point
+        #	THIS WILL SLOW DOWN CALCULATIONS HORRIBLY
+        #	BUT WILL ALLOW US TO COLLECT ADDITIONAL INFORMATION FOR
+        #	OUR STATISTICAL ANALYSES
+        #	WE STILL NEED TO THINK OUT THE BEST WAY TO PRODUCE THE
+        #	OUTPUT SO THAT IT IS AMENABLE FOR STATISTICAL ANALYSIS
+        #	Probably we should store them in a data frame with two
+        #	matrices (low/high) and then save the data frame at the
+        #	end of the calculation. Choice of time as rows or columns
+        #	will depend on the statistics we finally use, but that
+        #	still is a work in progress. Or maybe we should use only
+        #	two long columns and add the time step as a factor...
+        #
+        if (verboseMode > 5) {
+            # Do FVA and save the output
+            ranges <- fluxVar(model, percentage=80, verboseMode=verbose)
+            print("\n\nBeing playful, aren't you? ;-)\n\n")
+
+	    tabFVAvalues <- paste(model@mod_name, 'ADFBA-FVA-', stepNo, '.tab', sep='')
+            cat(paste('\nSaving optimized output from FVA to "', tabFVAvalues,'"\n', sep=""))
+            cat(paste('\nTotal length: ', length((ranges)), 
+    	              '\nNo. of reactions: ', length(ranges)/2, '\n\n'))
+
+            nreact=length(ranges)/2
+            for (i in 1:nreact) {
+                if (verbose > 6) {
+                    print(paste('FVA,', stepNo, ',', i, ',', react_id(model)[i], ',', 
+    			        lp_obj(ranges)[i], ',', lp_obj(ranges)[i+nreact]))
+                }
+                out <- paste(i, '	', react_id(model)[i], '	', 
+    		            lp_obj(ranges)[i], '	', lp_obj(ranges)[i+nreact])
+                cat(out, file=tabFVAvalues, sep="\n", append=TRUE)
+            }
+            print(paste('--- END FVA', stepNo, '---\n'))
+        }
         
         # if the objective function is not Biomass, this is plainly wrong!
         mu_obj =  sol$obj;  ##objvalue sol.f
-	# XXX JR XXX any of these alternatives should fix the issue
+	# XXX j XXX any of these alternatives should fix the issue
 	mu_bmidx <- sol$fluxes[biomassIdx];
         mu_bmrxn <- sol$fluxes[react_id(model) == biomassRxn]
         mu <- mu_bmidx
@@ -972,7 +1061,7 @@ if (TRUE) {
             }
         }
         
-	# get uptake fluxes after FBA
+	# get uptake fluxes after FBA/MTF
         uptakeFlux = sol$fluxes[excReactInd];
         # Update concentrations
         concentrations[excReactInd]= concentrations[excReactInd] - uptakeFlux/mu*biomass*(1-exp(mu*timeStep));
@@ -989,7 +1078,6 @@ if (TRUE) {
             cat('\n')
         }
 
-        #waitbar(stepNo/nSteps,h);
         timeVec = c(timeVec,stepNo*timeStep);
 
 	if (verboseMode > 1) cat('Objective at step', stepNo, '(', stepNo*timeStep ,'h ):', sol$obj, '\n');
