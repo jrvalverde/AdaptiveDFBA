@@ -17,19 +17,3 @@
 #'
 "_PACKAGE"
 #> [1] "_PACKAGE"
-
-#' Escherichia coli Core Energy Metabolism Network
-#'
-#'   The dataset is a network representation of the \emph{E. coli} core
-#'  metabolism. It consists of 62 internal reactions, 14 exchange
-#'  reactions and a biomass objective function.
-#'
-#' @format	An object of class \code{modelorg}
-#'
-#' @source	<http://gcrg.ucsd.edu/Downloads/EcoliCore>
-#'
-#' @usage	\code{data(Ec_core)}
-#'
-"Ec_core"
-#> [1] "EC_core"
-
