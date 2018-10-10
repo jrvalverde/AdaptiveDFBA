@@ -4,14 +4,15 @@
 \alias{adaptiveDFBA}
 \title{adaptive dynamic flux balance analysis}
 \usage{
-adaptiveDFBA(model, substrateRxns, initConcentrations, initBiomass, timeStep, nSteps, 
-    exclUptakeRxns,
-    retOptSol = TRUE,
-           fld = FALSE, verboseMode = 2, 
-           verboseMode = 2,
-           biomassRxn = "",
-           dynamicConstraints,
-           mediumConcs, ...)
+adaptiveDFBA(model, substrateRxns, initConcentrations, initBiomass, 
+         timeStep, nSteps, 
+         exclUptakeRxns,
+         retOptSol = TRUE,
+         fld = FALSE, verboseMode = 2, 
+         verboseMode = 2,
+         biomassRxn = "",
+         dynamicConstraints,
+         nutrientChanges, ...)
 }
 \arguments{
 \item{model}{An object of class \code{\link{modelorg}} containing the
@@ -35,7 +36,7 @@ the FBA fails to find a viable solution (indicating that the
 available substrates are not enough to support a solution / viability).}
 
 \item{exclUptakeRxns}{List of uptake reactions whose substrate
-          concentrations do not change 
+             concentrations do not change 
 Default: \code{c('EX_co2(e)','EX_o2(e)','EX_h2o(e)','EX_h(e)')}}
 
 \item{retOptSol}{Boolean. Indicates if optsol class will be returned or a simple list.
@@ -52,7 +53,7 @@ Default: \code{FALSE}}
        graphical progress bar.)\cr
 4 (additional information on the computations being made plus a
        graphical progress bar.)\cr
-Default: \code{0}}
+  Default: \code{0}}
 
 \item{biomassRxn}{Name of the biomass reaction so we can use it
 to compute growth, concentrations, etc...}
@@ -60,15 +61,16 @@ to compute growth, concentrations, etc...}
 \item{dynamicConstraints}{Values of dynamically changing reaction rates
 Default: \code{NULL}}
 
-\item{mediumConcs}{A facility to simulate changing concentrations
+\item{nutrientChanges}{A facility to simulate changing concentrations
 of nutrients: it may be either an array of delta values
 to add at each time point, or a function that will
 take the current concentrations and return the new ones (the old concentrations
      will be substituted by the new ones, so ensure you return all).
 Default: \code{NULL}}
 
-\item{useMTF}{Whether to use MTF instead of FBA to compute
-the fluxes}
+\item{method}{Which method should be used to solve the system at each
+step. Currently it can be 'FBA' or 'MTF'. Default:
+\code{"FBA"}}
 
 \item{\dots}{Further arguments passed to \code{\linkS4class{sysBiolAlg}}.  Argument
 \code{solverParm} is a good candidate.}
@@ -212,19 +214,19 @@ There is also an (as yet untested) possibility of having a finer control:
     intentionally left undocumented until we have mode experience in using
     it.
 
-\emph{mediumConcs}: We consider two possibilities for modifying concentrations
+\emph{nutrientChanges}: We consider two possibilities for modifying concentrations
     (experimentwise): one is that you add nutrients at predefined time points,
     which is implemented as a table, and the other is that you have a sensor to
     detect when nutrients are below a given value and then add the nutrients,
     which is implemented as a function:
 
-mediumConcs may be a table providing the delta changes in nutrient
+nutrientChanges may be a table providing the delta changes in nutrient
     concentration at each time point. The changes at every time point should be
     provided sorted in time order. Only final time points may be missing, not
     intermediate time points. Deltas may positive (add nutrient), negative
     (remove nutrient) or zero (leave unchanged).
 
-mediumConcs may be a function, designed to address the second case by
+nutrientChanges may be a function, designed to address the second case by
     simulating a fed-batch environent:  this function must take as only input
     argument \emph{all} the current  concentrations (i.e. the function will act
     as a "sensor" that is able to read concentrations at each time step) and
@@ -252,9 +254,26 @@ Ec_df <- adaptiveDFBA(Ec_core,substrateRxns={'EX_glc(e)'},initConcentrations=10,
 ## plot biomass and reactions
 plot(Ec_df,plotRxns=c('EX_glc(e)','EX_ac(e)'));
 
+     # Run \\code{adaptiveDFBA} using the specified dynamic constraints 
+data(SlividansWT)
+verbose <- 2
+     af_sol <- adaptiveDFBA(model, substrateRxns=substrateRxns, 
+  		    initConcentrations=initConcentrations,
+  		    initBiomass = initBiomass,
+  		    timeStep = timeStep,
+  		    nSteps = nSteps,
+  		    exclUptakeRxns=exclUptakeRxns,
+  		    retOptSol=TRUE,
+  		    fld=TRUE,
+  		    biomassRxn=biomassRxn,
+  		    dynamicConstraints=dynamicConstraints,
+  		    verboseMode=verbose);
+      plot(af_sol, plotRxns=plotRxns);
+
 \dontrun{
 ## open S.lividans
 data(Slividans)
+# the distributed model has all exchange reactions without any limits
 model <- Slividans;
 biomass <- 'Biomass_SLI'	
 nSteps=50
@@ -288,11 +307,13 @@ for (r in reactions) {
 }
   
 ## Perform the simulation
+#   Note that we provide an insufficient medium for growth
 adfba <- adaptiveDFBA(model, 
-          substrateRxns={'EX_mnl(e)'},	# we should use NMMP at least
+          substrateRxns={'EX_mnl(e)'},	# we should better use NMMP
           initConcentrations=54,
           initBiomass=.01,
-          timeStep=tStep,nSteps=nSteps,
+          timeStep=tStep,
+               nSteps=nSteps,
           verboseMode=5,
           biomassRxn=biomass,
           dynamicConstraints=dc,
