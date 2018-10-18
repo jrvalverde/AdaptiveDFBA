@@ -10,7 +10,7 @@
 #'
 #' @source	<http://gcrg.ucsd.edu/Downloads/EcoliCore>
 #'
-#' @usage	\code{
+#' @usage	{
 #'     data(Ec_core)
 #'     lowbnd(Ec_core)[react_id(Ec_core)=='EX_glc(e)']=-10;
 #'     lowbnd(Ec_core)[react_id(Ec_core)=='EX_o2(e)']=-18;
@@ -49,7 +49,7 @@
 #'
 #' @source	<http://bigg.ucsd.edu/models/iJO1366>
 #'
-#' @usage	\code{
+#' @usage	{
 #'     data(Ecoli)
 #'     lowbnd(Ecoli[react_id(Ec_core)=='EX_glc(e)']=-10;
 #'     lowbnd(Ecoli)[react_id(Ec_core)=='EX_o2(e)']=-18;
@@ -71,7 +71,6 @@
 #'	genome-scale reconstruction of Escherichia coli metabolism-2011}. 
 #'	Molecular systems biology, 7(1), 535.
 #'
-#' @export
 #'
 "Ecoli"
 #> [1] "Ecoli"
@@ -95,17 +94,16 @@
 #'  to see several examples).
 #'
 #'
-#' @format	An object of class \code{modelorg}
+#' @format	An object of class {modelorg}
 #'
 #' @source	<https://bmcmicrobiol.biomedcentral.com/articles/10.1186/s12866-018-1199-3>
 #'
-#' @usage	\code{data(Slividans)}
+#' @usage	{data(Slividans)}
 #'
 #' @references	 Valverde, José R., Sonia Gullón, and Rafael P. Mellado. (2018)
 #'  \emph{Modelling the metabolism of protein secretion through the Tat route 
 #'  in Streptomyces lividans}. BMC microbiology 18.1: 59
 #'
-#' @export
 #'
 "Slividans"
 #> [1] "Slividans"
@@ -145,7 +143,7 @@
 #'
 #' @source	<manuscript submitted for publication>
 #'
-#' @usage	\code{
+#' @usage	{
 #'     data(SlividansWT)
 #'     ls()
 #'     verbose <- 2
@@ -174,7 +172,6 @@
 #'		recombinant Streptomyces lividans TK24 batch fermentations. 
 #'		Journal of biotechnology, 152(4), 132-143.
 #'
-#' @export
 #'
 "SlividansWT"
 #> [1] "SlividansWT"
@@ -217,7 +214,7 @@
 #'
 #' @source	<manuscript submitted for publication>
 #'
-#' @usage	\code{
+#' @usage {
 #'     data(SlividansAML)
 #'     ls()
 #'     verbose <- 2
@@ -246,7 +243,6 @@
 #'		recombinant Streptomyces lividans TK24 batch fermentations. 
 #'		Journal of biotechnology, 152(4), 132-143.
 #'
-#' @export
 #'
 "Slividans_pIJ486"
 #> [1] "Slividans_pIJ486"
@@ -290,7 +286,7 @@
 #'
 #' @source	<manuscript submitted for publication>
 #'
-#' @usage	\code{
+#' @usage	{
 #'     data(SlividansDAG)
 #'     ls()
 #'     verbose <- 2
@@ -325,7 +321,6 @@
 #'		protein elicits different cellular responses in Streptomyces 
 #'		lividans. PLOSone, 10 (7), e0133645.
 #'
-#' @export
 #'
 "SlividansDAG"
 #> [1] "SlividansDAG"
@@ -368,7 +363,7 @@
 #'
 #' @source	<manuscript submitted for publication>
 #'
-#' @usage	\code{
+#' @usage	{
 #'     data(SlividansAML)
 #'     ls()
 #'     verbose <- 2
@@ -403,7 +398,6 @@
 #'		protein elicits different cellular responses in Streptomyces 
 #'		lividans. PLOSone, 10 (7), e0133645.
 #'
-#' @export
 #'
 "SlividansAML"
 #> [1] "SlividansAML"
@@ -445,7 +439,7 @@
 #'
 #' @source	<manuscript submitted for publication>
 #'
-#' @usage	\code{
+#' @usage	{
 #'     data(SlividansAML)
 #'     ls()
 #'     verbose <- 2
@@ -474,7 +468,6 @@
 #'		recombinant Streptomyces lividans TK24 batch fermentations. 
 #'		Journal of biotechnology, 152(4), 132-143.
 #'
-#' @export
 #'
 "SlividansTNF"
 #> [1] "SlividansTNF"
