@@ -9,7 +9,7 @@
 <https://bmcmicrobiol.biomedcentral.com/articles/10.1186/s12866-018-1199-3>
 }
 \usage{
-\code{data(Slividans)}
+data(Slividans)
 }
 \description{
 The dataset is a network representation of the \emph{S. lividans} 
