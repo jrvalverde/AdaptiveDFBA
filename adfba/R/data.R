@@ -98,7 +98,7 @@
 #'
 #' @source	<https://bmcmicrobiol.biomedcentral.com/articles/10.1186/s12866-018-1199-3>
 #'
-#' @usage	{data(Slividans)}
+#' @usage	data(Slividans)
 #'
 #' @references	 Valverde, José R., Sonia Gullón, and Rafael P. Mellado. (2018)
 #'  \emph{Modelling the metabolism of protein secretion through the Tat route 
