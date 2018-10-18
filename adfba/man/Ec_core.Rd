@@ -9,7 +9,7 @@
 <http://gcrg.ucsd.edu/Downloads/EcoliCore>
 }
 \usage{
-\code{
+{
     data(Ec_core)
     lowbnd(Ec_core)[react_id(Ec_core)=='EX_glc(e)']=-10;
     lowbnd(Ec_core)[react_id(Ec_core)=='EX_o2(e)']=-18;

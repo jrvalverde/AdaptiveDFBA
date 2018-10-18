@@ -9,7 +9,7 @@
 <http://bigg.ucsd.edu/models/iJO1366>
 }
 \usage{
-\code{
+{
     data(Ecoli)
     lowbnd(Ecoli[react_id(Ec_core)=='EX_glc(e)']=-10;
     lowbnd(Ecoli)[react_id(Ec_core)=='EX_o2(e)']=-18;

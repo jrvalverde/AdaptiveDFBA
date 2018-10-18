@@ -9,7 +9,7 @@
 <manuscript submitted for publication>
 }
 \usage{
-\code{
+{
     data(SlividansDAG)
     ls()
     verbose <- 2

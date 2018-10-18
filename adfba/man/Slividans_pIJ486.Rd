@@ -9,7 +9,7 @@
 <manuscript submitted for publication>
 }
 \usage{
-\code{
+{
     data(SlividansAML)
     ls()
     verbose <- 2
