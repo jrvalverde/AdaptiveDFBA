@@ -98,7 +98,23 @@
 #'
 #' @source	<https://bmcmicrobiol.biomedcentral.com/articles/10.1186/s12866-018-1199-3>
 #'
-#' @usage	data(Slividans)
+#' @usage	{
+#'     data(Slividans)
+#'     ls()
+#'     verbose <- 2
+#'     af_sol <- adaptiveDFBA(model, substrateRxns=substrateRxns, 
+#'                         initConcentrations=initConcentrations,
+#'                         initBiomass = initBiomass,
+#'                         timeStep = timeStep,
+#'                         nSteps = nSteps,
+#'                         exclUptakeRxns=exclUptakeRxns,
+#'                         retOptSol=TRUE,
+#'                         fld=TRUE,
+#'                         biomassRxn=biomassRxn,
+#'                         dynamicConstraints=dynamicConstraints,
+#'                         verboseMode=verbose);
+#'     plot(af_sol, plotRxns=plotRxns);
+#' }
 #'
 #' @references	 Valverde, José R., Sonia Gullón, and Rafael P. Mellado. (2018)
 #'  \emph{Modelling the metabolism of protein secretion through the Tat route 
@@ -215,7 +231,7 @@
 #' @source	<manuscript submitted for publication>
 #'
 #' @usage {
-#'     data(SlividansAML)
+#'     data(Slividans_pIJ486)
 #'     ls()
 #'     verbose <- 2
 #'     af_sol <- adaptiveDFBA(model, substrateRxns=substrateRxns, 
@@ -440,7 +456,7 @@
 #' @source	<manuscript submitted for publication>
 #'
 #' @usage	{
-#'     data(SlividansAML)
+#'     data(SlividansTNF)
 #'     ls()
 #'     verbose <- 2
 #'     af_sol <- adaptiveDFBA(model, substrateRxns=substrateRxns, 
