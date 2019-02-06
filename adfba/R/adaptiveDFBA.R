@@ -1097,6 +1097,7 @@ if (FALSE) {			#section is deemed OK
     
     # add names to the concentrationMatrix
     row.names(concentrationMatrix)=react_id(model)[excReactInd];
+    row.names(all_fluxes)=react_id(model)
     ## Preparing OUTPUT
     #concentrationMatrix,excRxnNames,timeVec,biomassVec
     if (isTRUE(retOptSol)) {
