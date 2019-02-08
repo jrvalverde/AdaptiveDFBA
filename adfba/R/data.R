@@ -94,31 +94,21 @@
 #'  to see several examples).
 #'
 #'
-#' @format	An object of class {modelorg}
+#' @format	An object of class \code{modelorg}
 #'
 #' @source	<https://bmcmicrobiol.biomedcentral.com/articles/10.1186/s12866-018-1199-3>
 #'
-#' @usage	{
-#'     data(Slividans)
-#'     ls()
-#'     verbose <- 2
-#'     af_sol <- adaptiveDFBA(model, substrateRxns=substrateRxns, 
-#'                         initConcentrations=initConcentrations,
-#'                         initBiomass = initBiomass,
-#'                         timeStep = timeStep,
-#'                         nSteps = nSteps,
-#'                         exclUptakeRxns=exclUptakeRxns,
-#'                         retOptSol=TRUE,
-#'                         fld=TRUE,
-#'                         biomassRxn=biomassRxn,
-#'                         dynamicConstraints=dynamicConstraints,
-#'                         verboseMode=verbose);
-#'     plot(af_sol, plotRxns=plotRxns);
-#' }
+#' @usage	data(Slividans)
 #'
-#' @references	 Valverde, José R., Sonia Gullón, and Rafael P. Mellado. (2018)
-#'  \emph{Modelling the metabolism of protein secretion through the Tat route 
-#'  in Streptomyces lividans}. BMC microbiology 18.1: 59
+#' @references	 Valverde, José R., Gullón, S., García-Herrero, C.A.,
+#'		Campoy, I, & Mellado, R.P. (2018) Dynamic modelling of 
+#'		overproduced secretory proteins in Streptomyces lividans 
+#'		using Adaptive DFBA. Submitted for publication.
+#'
+#'              Valverde, José R., Sonia Gullón, and Rafael P. Mellado. 
+#'              (2018) \emph{Modelling the metabolism of protein secretion 
+#'              through the Tat route in Streptomyces lividans}. 
+#'              BMC microbiology 18.1: 59
 #'
 #'
 "Slividans"
@@ -178,9 +168,9 @@
 #'  }
 #'
 #' @references	 Valverde, José R., Gullón, S., García-Herrero, C.A.,
-#'		Campoy, I, & Mellado, R.P. (2018) Adaptive DFBA: versatile 
-#'		modelling of complex dynamic metabolic processes. Submitted
-#'		for publication.
+#'		Campoy, I, & Mellado, R.P. (2018) Dynamic modelling of 
+#'		overproduced secretory proteins in Streptomyces lividans 
+#'		using Adaptive DFBA. Submitted for publication.
 #'  
 #'		D'Huys, P. J., Lule, I., Van Hove, S., Vercammen, D., 
 #'		Wouters, C., Bernaerts, K., Anné, J.& Van Impe, J. F. M. 
@@ -230,8 +220,8 @@
 #'
 #' @source	<manuscript submitted for publication>
 #'
-#' @usage {
-#'     data(Slividans_pIJ486)
+#' @usage	{
+#'     data(SlividansAML)
 #'     ls()
 #'     verbose <- 2
 #'     af_sol <- adaptiveDFBA(model, substrateRxns=substrateRxns, 
@@ -249,9 +239,9 @@
 #'  }
 #'
 #' @references	 Valverde, José R., Gullón, S., García-Herrero, C.A.,
-#'		Campoy, I, & Mellado, R.P. (2018) Adaptive DFBA: versatile 
-#'		modelling of complex dynamic metabolic processes. Submitted
-#'		for publication.
+#'		Campoy, I, & Mellado, R.P. (2018) Dynamic modelling of 
+#'		overproduced secretory proteins in Streptomyces lividans 
+#'		using Adaptive DFBA. Submitted for publication.
 #'  
 #'		D'Huys, P. J., Lule, I., Van Hove, S., Vercammen, D., 
 #'		Wouters, C., Bernaerts, K., Anné, J.& Van Impe, J. F. M. 
@@ -321,9 +311,9 @@
 #'  }
 #'
 #' @references	 Valverde, José R., Gullón, S., García-Herrero, C.A.,
-#'		Campoy, I, & Mellado, R.P. (2018) Adaptive DFBA: versatile 
-#'		modelling of complex dynamic metabolic processes. Submitted
-#'		for publication.
+#'		Campoy, I, & Mellado, R.P. (2018) Dynamic modelling of 
+#'		overproduced secretory proteins in Streptomyces lividans 
+#'		using Adaptive DFBA. Submitted for publication.
 #'  
 #'		Gabarró, M. V., Gullón, S., Vicente, R. L., Caminal, G., 
 #'		Mellado, R. P., & López-Santín, J. (2017). A Streptomyces 
@@ -398,9 +388,9 @@
 #'  }
 #'
 #' @references	 Valverde, José R., Gullón, S., García-Herrero, C.A.,
-#'		Campoy, I, & Mellado, R.P. (2018) Adaptive DFBA: versatile 
-#'		modelling of complex dynamic metabolic processes. Submitted
-#'		for publication.
+#'		Campoy, I, & Mellado, R.P. (2018) Dynamic modelling of 
+#'		overproduced secretory proteins in Streptomyces lividans 
+#'		using Adaptive DFBA. Submitted for publication.
 #'  
 #'		Gabarró, M. V., Gullón, S., Vicente, R. L., Caminal, G., 
 #'		Mellado, R. P., & López-Santín, J. (2017). A Streptomyces 
@@ -417,6 +407,7 @@
 #'
 "SlividansAML"
 #> [1] "SlividansAML"
+
 
 #' Dynamic Modelling of Streptomyces lividans secreting mTNF-α
 #'
@@ -474,9 +465,9 @@
 #'  }
 #'
 #' @references	 Valverde, José R., Gullón, S., García-Herrero, C.A.,
-#'		Campoy, I, & Mellado, R.P. (2018) Adaptive DFBA: versatile 
-#'		modelling of complex dynamic metabolic processes. Submitted
-#'		for publication.
+#'		Campoy, I, & Mellado, R.P. (2018) Dynamic modelling of 
+#'		overproduced secretory proteins in Streptomyces lividans 
+#'		using Adaptive DFBA. Submitted for publication.
 #'
 #'		D'Huys, P. J., Lule, I., Van Hove, S., Vercammen, D., 
 #'		Wouters, C., Bernaerts, K., Anné, J.& Van Impe, J. F. M. 
@@ -488,3 +479,76 @@
 "SlividansTNF"
 #> [1] "SlividansTNF"
 
+
+#' Dynamic Modelling of Streptomyces lividans secreting CElA
+#'
+#'   The dataset is a network representation of the \emph{S. lividans} 
+#'  metabolism as defined in the published metabolic model iJV1220.
+#'  as published in
+#'  
+#'   Valverde, J. R., Gullón, S., & Mellado, R. P. (2018). Modelling the 
+#'  metabolism of protein secretion through the Tat route in Streptomyces 
+#'  lividans. BMC microbiology, 18(1), 59.
+#'  
+#'   It consists of over 1800 internal reactions, over 1200
+#'  metabolites and the biomass objective function is called Biomass_SLI.
+#'  
+#'   The metabolic network has been configured to model S. lividans secreting mTNF-α
+#'  cloned under the multi-copy plasmid pIJ486, and complemented with the 
+#'  required data to run an Adaptive DFBA simulation:
+#'  
+#'  	model			The preconfigured model
+#'  	initConcentrations	The initial concentrations of substrates,
+#'  			corresponding to CLIM  Carbon limiting medium.
+#'  	initBiomass		The inoculum used (0.1)
+#'  	timeStep		1h
+#'  	nSteps			60
+#'  	exclUptakeRxns		Uptake reactions whose metabolite is assumed
+#'  				to be in excess in the medium
+#'  	biomassRxn		'Biomass_SLI'
+#'  	dynamicConstraints	A data frame with a list of constraints to be
+#'  				applied at each step: it contains reaction 
+#'  				limits for Biomass and L-alanine use.
+#'  
+#'
+#'
+#' @format	An object of class \code{modelorg}
+#'
+#' @source	<manuscript submitted for publication>
+#'
+#' @usage	{
+#'     data(SlividansCEL)
+#'     ls()
+#'     verbose <- 2
+#'     af_sol <- adaptiveDFBA(model, substrateRxns=substrateRxns, 
+#'                         initConcentrations=initConcentrations,
+#'                         initBiomass = initBiomass,
+#'                         timeStep = timeStep,
+#'                         nSteps = nSteps,
+#'                         exclUptakeRxns=exclUptakeRxns,
+#'                         retOptSol=TRUE,
+#'                         fld=TRUE,
+#'                         biomassRxn=biomassRxn,
+#'                         dynamicConstraints=dynamicConstraints,
+#'                         verboseMode=verbose);
+#'     plot(af_sol, plotRxns=plotRxns);
+#'  }
+#'
+#' @references	 Valverde, José R., Gullón, S., García-Herrero, C.A.,
+#'		Campoy, I, & Mellado, R.P. (2018) Dynamic modelling of 
+#'		overproduced secretory proteins in Streptomyces lividans 
+#'		using Adaptive DFBA. Submitted for publication.
+#'
+#'              Bouvin, J, Cajot, S, D’Huys, PJ, Ampofo-Asiama, J, Anné, 
+#'              J, Van Impe, J, et al (2015). Multi-objective experimental 
+#'              design for 13C-based metabolic flux analysis. Mathematical 
+#'              biosciences, 268, 22-30
+#'
+#'              Daniels, W, Bouvin, J, Busche, T, Rückert, C, Simoens, K, 
+#'              Karamanou, S, et al (2018). Transcriptomic and fluxomic 
+#'              changes in Streptomyces lividans producing heterologous 
+#'              protein. Microbial cell factories, 17(1), 198.
+#'
+#'
+"SlividansCEL"
+#> [1] "SlividansCEL"

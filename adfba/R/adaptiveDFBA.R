@@ -1096,8 +1096,11 @@ if (FALSE) {			#section is deemed OK
     uppbnd(model) <- originalUpp
     
     # add names to the concentrationMatrix
-    row.names(concentrationMatrix)=react_id(model)[excReactInd];
-    row.names(all_fluxes)=react_id(model)
+    row.names(concentrationMatrix) = react_id(model)[excReactInd];
+    row.names(all_fluxes) = react_id(model);
+    colnames(concentrationMatrix) = timeVec;
+    colnames(all_fluxes) = timeVec[-1];
+    
     ## Preparing OUTPUT
     #concentrationMatrix,excRxnNames,timeVec,biomassVec
     if (isTRUE(retOptSol)) {
