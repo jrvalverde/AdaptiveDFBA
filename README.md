@@ -1,4 +1,10 @@
 # AdaptiveDFBA
+
+
+
+[![DOI](https://zenodo.org/badge/151059786.svg)](https://zenodo.org/badge/latestdoi/151059786)
+
+
 An implementation of the AdaptiveDFBA algorithm using R and the sybil package
 
 A more complete description will be added after the paper has been published.
