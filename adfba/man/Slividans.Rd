@@ -28,8 +28,14 @@ The dataset is a network representation of the \emph{S. lividans}
  to see several examples).
 }
 \references{
-Valverde, José R., Sonia Gullón, and Rafael P. Mellado. (2018)
- \emph{Modelling the metabolism of protein secretion through the Tat route 
- in Streptomyces lividans}. BMC microbiology 18.1: 59
+Valverde, José R., Gullón, S., García-Herrero, C.A.,
+	Campoy, I, & Mellado, R.P. (2018) Dynamic modelling of 
+	overproduced secretory proteins in Streptomyces lividans 
+	using Adaptive DFBA. Submitted for publication.
+
+             Valverde, José R., Sonia Gullón, and Rafael P. Mellado. 
+             (2018) \emph{Modelling the metabolism of protein secretion 
+             through the Tat route in Streptomyces lividans}. 
+             BMC microbiology 18.1: 59
 }
 \keyword{datasets}

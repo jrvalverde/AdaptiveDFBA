@@ -59,9 +59,9 @@ The dataset is a network representation of the \emph{S. lividans}
 }
 \references{
 Valverde, José R., Gullón, S., García-Herrero, C.A.,
-	Campoy, I, & Mellado, R.P. (2018) Adaptive DFBA: versatile 
-	modelling of complex dynamic metabolic processes. Submitted
-	for publication.
+	Campoy, I, & Mellado, R.P. (2018) Dynamic modelling of 
+	overproduced secretory proteins in Streptomyces lividans 
+	using Adaptive DFBA. Submitted for publication.
  
 	D'Huys, P. J., Lule, I., Van Hove, S., Vercammen, D., 
 	Wouters, C., Bernaerts, K., Anné, J.& Van Impe, J. F. M. 

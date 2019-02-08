@@ -6,7 +6,7 @@
 \alias{adfba-package}
 \title{adfba: A package for Adaptive DFBA metabolic modeling.}
 \description{
-Implements the Adaptive DFBA technique proposed by Valverde et al. 2018.
+Implements the Adaptive DFBA technique proposed by Valverde et al. 2019.
 }
 \details{
 The adfba Package provides the function
@@ -19,6 +19,11 @@ algorithm as described in Valverde et al. 2018.
 }
 
 \references{
+Valverde, José R., Gullón, S., García-Herrero, C.A.,
+Campoy, I, & Mellado, R.P. (2018) Dynamic modelling of 
+overproduced secretory proteins in Streptomyces lividans 
+using Adaptive DFBA. Submitted for publication.
+
 Valverde, Jose R., Sonia Gullon, and Rafael P. Mellado.  (2018)
  	\emph{Modelling the metabolism of protein secretion through the Tat route in Streptomyces lividans}.
  	BMC microbiology 18.1: 59
