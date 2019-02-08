@@ -6,7 +6,7 @@ Date: 2018-08-31
 Maintainer: Jose R. Valverde <jrvalverde@cnb.csic.es>
 Author: Jose R. Valverde [aut, cre]
 Authors@R: person("Jose R", "Valverde", email = "jrvalverde@cnb.csic.es", role = c("aut", "cre"))
-Description: Implements the Adaptive DFBA technique proposed by Valverde et al. 2018.
+Description: Implements the Adaptive DFBA technique proposed by Valverde et al. 2019.
 Depends: R (>= 3.0), sybil, sybilDynFBA
 Imports: methods
 LazyLoad: yes
