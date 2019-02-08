@@ -25,6 +25,13 @@ Then, download ADFBA, unzip it, and install it using R 'devtools' package
 A sample session might be (assuming that you have R installed and an ODE 
 solver installed (which should be trivial on Linux using a package manager)
 
+In Ubuntu, for instance, you could install the ODE solvers with
+
+>
+> sudo apt install lp-solve liblpsolve-dev coinor-clp coinor-libclp-dev glpk-utils libglpk-dev 
+>
+
+
 $ wget https://github.com/jrvalverde/AdaptiveDFBA/archive/master.zip
 
 $ unzip master
@@ -33,7 +40,7 @@ $ cd AdaptiveDFBA-master
 
 $ R
 
-> install.packages(c('devtools', 'sybil', 'sybilDynFBA', ‘glpkAPI’, ‘cplexAPI’, ‘clpAPI’, ‘lpSolveAPI’), dep=T)
+> install.packages(c('devtools', 'sybil', 'sybilDynFBA', ‘glpkAPI’, ‘clpAPI’, ‘lpSolveAPI’), dep=T)
 >
 > library(devtools)
 >
