@@ -26,17 +26,23 @@ A sample session might be (assuming that you have R installed and an ODE
 solver installed (which should be trivial on Linux using a package manager)
 
 $ wget https://github.com/jrvalverde/AdaptiveDFBA/archive/master.zip
+
 $ unzip master
+
 $ cd AdaptiveDFBA-master
+
 $ R
 
-> install.packages(c('devtools', 'sybil', 'sybilDynFBA', ‘glpkAPI’, ‘cplexAPI’, 
-                     ‘clpAPI’, ‘lpSolveAPI’), dep=T)
+> install.packages(c('devtools', 'sybil', 'sybilDynFBA', ‘glpkAPI’, ‘cplexAPI’, ‘clpAPI’, ‘lpSolveAPI’), dep=T)
+>
 > library(devtools)
+>
 > install('adfba', dep=T)
 > 
 > library(adfba)
+>
 > help(adaptiveDFBA)
+>
 
 More detailed information will be provided after the paper is published.
 
