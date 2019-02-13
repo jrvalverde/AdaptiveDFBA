@@ -1,4 +1,6 @@
-If you have issues with this code, please do contact the author.
+If you have issues with this code, please do contact the author or use one of the 
+"Issues" report forms available. We will do our best to accommodate and answer
+promptly.
 
 If there is functionality that you would like to see added, there are two options
 
