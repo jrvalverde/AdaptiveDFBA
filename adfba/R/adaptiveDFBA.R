@@ -356,7 +356,7 @@
 # dynamicFBA() contained in the COBRA Toolbox.
 # The algorithm is the same.
 #
-#	" Oui, je vois l'heure; il est l'Éternité! "
+#	" Oui, je vois l'heure; il est l'ÃternitÃ©! "
 #			L'Horloge. Charles Baudelaire.
 #
 adaptiveDFBA <- function (model,
@@ -795,17 +795,30 @@ if (TRUE) {
                 # each and every time point. At least we will use it
                 # as such. If it is not, either we will get an error or
                 # nothing will be modified (unless terribly unlucky).
-        	nutrientsAdded <- names(nutrientChanges)[ -which(names(nutrientChanges) %in% "Time")]
+        	nutrientsDelta <- names(nutrientChanges)[ -which(names(nutrientChanges) %in% "Time")]
         
-                for (nutrient in 1:length(nutrientsAdded)) {
+                for (nutrient in 1:length(nutrientsDelta)) {
 		    # modify its concentration as requested
                     if (stepNo <= dim(nutrientChanges[nutrient])[1]) {
+                        # do not modify is not needed
+                        if (nutrientsDelta[stepNo][nutrient] == 0) next;
+                        
                         # NOTE that we do not check if the value is positive
                         # or not, i.e. we may both add and remove nutrients
                         # at any step (depending on the sign of the delta)
+                        oldc <- concentrations[react_id(model) == nutrient]
 		        concentrations[react_id(model) == nutrient] <- 
                             concentrations[react_id(model) == nutrient] +
-                            nutrientAdditions[stepNo][nutrient]
+                            nutrientsDelta[stepNo][nutrient]
+                    }
+                    if (verboseMode > 3) {
+                    cat('Step ', stepNo, 
+                        ' nut ', nutrient, 
+                        ' old ', oldc,
+                        ' mod ', nutrientsDelta[stepNo][nutrient],
+                        ' new ', concentrations[react_id(model) == nutrient],
+                        '\n'
+                        )
                     }
                 }
 	    }
