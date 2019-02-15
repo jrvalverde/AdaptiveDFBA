@@ -795,13 +795,13 @@ if (TRUE) {
                 # each and every time point. At least we will use it
                 # as such. If it is not, either we will get an error or
                 # nothing will be modified (unless terribly unlucky).
-        	nutrientsDelta <- names(nutrientChanges)[ -which(names(nutrientChanges) %in% "Time")]
+        	updNutrNames <- names(nutrientChanges)[ -which(names(nutrientChanges) %in% "Time")]
         
-                for (nutrient in 1:length(nutrientsDelta)) {
+                for (nutrient in 1:length(updNutrNames)) {
 		    # modify its concentration as requested
                     if (stepNo <= dim(nutrientChanges[nutrient])[1]) {
                         # do not modify is not needed
-                        if (nutrientsDelta[stepNo][nutrient] == 0) next;
+                        if (nutrientChanges[stepNo][nutrient] == 0) next;
                         
                         # NOTE that we do not check if the value is positive
                         # or not, i.e. we may both add and remove nutrients
@@ -809,13 +809,13 @@ if (TRUE) {
                         oldc <- concentrations[react_id(model) == nutrient]
 		        concentrations[react_id(model) == nutrient] <- 
                             concentrations[react_id(model) == nutrient] +
-                            nutrientsDelta[stepNo][nutrient]
+                            nutrientChanges[stepNo][nutrient]
                     }
                     if (verboseMode > 3) {
                     cat('Step ', stepNo, 
                         ' nut ', nutrient, 
                         ' old ', oldc,
-                        ' mod ', nutrientsDelta[stepNo][nutrient],
+                        ' mod ', nutrientChanges[stepNo][nutrient],
                         ' new ', concentrations[react_id(model) == nutrient],
                         '\n'
                         )
