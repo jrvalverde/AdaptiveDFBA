@@ -815,7 +815,7 @@ if (TRUE) {
                     if (verboseMode > 3) {
                     cat(info, 
                         'Step ', stepNo, 
-                        ' met[] ', nutrient, 
+                        ' metab ', nutrient, 
                         ' old[] ', oldc,
                         ' delta ', nutrientChanges[stepNo, nutrient],
                         ' new[] ', concentrations[react_id(model) == nutrient],
