@@ -761,7 +761,8 @@ if (TRUE) {
 		}
 
                 if (verboseMode > 3) {
-                    cat('Step ', stepNo, 
+                    cat(info,
+                        'Step ', stepNo, 
                         ' Rxn ',rxnName, 
                         ' olo ', oldlow,
                         ' oup ', oldupp,
@@ -796,12 +797,12 @@ if (TRUE) {
                 # as such. If it is not, either we will get an error or
                 # nothing will be modified (unless terribly unlucky).
         	updNutrNames <- names(nutrientChanges)[ -which(names(nutrientChanges) %in% "Time")]
-        
-                for (nutrient in 1:length(updNutrNames)) {
-		    # modify its concentration as requested
-                    if (stepNo <= dim(nutrientChanges[nutrient])[1]) {
-                        # do not modify is not needed
-                        if (nutrientChanges[stepNo][nutrient] == 0) next;
+                
+                for (nutrient in updNutrNames) {
+		    
+                    if (stepNo <= length(nutrientChanges[,nutrient])) {
+                        # do not modify if not needed
+                        if (nutrientChanges[stepNo, nutrient] == 0) next;
                         
                         # NOTE that we do not check if the value is positive
                         # or not, i.e. we may both add and remove nutrients
@@ -809,14 +810,15 @@ if (TRUE) {
                         oldc <- concentrations[react_id(model) == nutrient]
 		        concentrations[react_id(model) == nutrient] <- 
                             concentrations[react_id(model) == nutrient] +
-                            nutrientChanges[stepNo][nutrient]
+                            nutrientChanges[stepNo, nutrient]
                     }
                     if (verboseMode > 3) {
-                    cat('Step ', stepNo, 
-                        ' nut ', nutrient, 
-                        ' old ', oldc,
-                        ' mod ', nutrientChanges[stepNo][nutrient],
-                        ' new ', concentrations[react_id(model) == nutrient],
+                    cat(info, 
+                        'Step ', stepNo, 
+                        ' met[] ', nutrient, 
+                        ' old[] ', oldc,
+                        ' delta ', nutrientChanges[stepNo, nutrient],
+                        ' new[] ', concentrations[react_id(model) == nutrient],
                         '\n'
                         )
                     }
