@@ -171,12 +171,12 @@ that when the times of need come, they have a reserve to feed upon and enlarge t
 survival expectation. This means they won't multiply so fast in times of abundance, exponential
 growth, but will be able to last longer and their populations may outlast fast growers. This
 of course will only work if times of hardship happen, for otherwise, the fast growers will
-outgroe and occupy the echological niche, but, as we all know, times of hardship are not so 
-uncommon and a well-stricken balance may actually be a great plus. And it likely must be 
-because so many organisms follow this strategy.
+outgrow them and occupy the echological niche, displacing suboptimal energy savers. But, 
+as we all know, times of hardship are not so uncommon, and a well-stricken balance may 
+actually be a great plus. And it likely must be, because so many organisms follow this strategy.
 
-There is, I suspect, a sociological/political/economical lesson to learn from all this,
-and indeed, I seem to vaguely remember there were lots of popular sayings related, but
+There is, I suspect, a sociological/political/economical lesson to learn from all this (or
+so I am told),and indeed, I seem to vaguely remember there were lots of popular sayings related, but
 this is not the place to discuss it.
 
 For now, suffice it to say that the R program we have been developing makes using these
