@@ -101,7 +101,7 @@ The complexity of the situations to be modeled can be as large as you want. The 
 is that, by using any of these methods, steering the simulation becomes trivial.
 
 As an example, we have (unpublished results) collected changes in metabolite concentrations
-over time in various simulations. One would expect the evolution of a given flux to be
+over time in various steered simulations. One would expect the evolution of a given flux to be
 a function of the relative concentrations of environmental metabolites. For instance,
 glucose consumption would change as glucose concentration changes, which is something
 you can readily model in most current DFBA schemes, but it may also depend on the relative
