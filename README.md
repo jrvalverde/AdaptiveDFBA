@@ -119,12 +119,12 @@ glucose.
 For key fluxes (exchange or internal fluxes), we have collected their calculated value as
 environmental metabolite concentrations changed, as a function of all other metabolites, then we have tried to
 fit them statistically, eliminate the less significant variables and obtained a simplified
-formula that matched flux evolution in response to (indirectly related) an ensemble of environmental 
+formula that matched flux evolution in response to an ensemble of (indirectly related) environmental 
 metabolite concentrations. We did also try several AI/ML methods to predict the evolution
 of given fluxes of interest in response to environmental conditions. 
 
 And then, we defined an R function that would, at each step, obtain the system conditions
-and substitute the flux values calculated by DFFBA by the ones obtained with our curve fits
+and substitute the flux values calculated by DFBA by the ones obtained with our curve fits
 or AI/ML models to see how well would the simulation using our predictions emulate
 the real system behaviour.
 
